@@ -17,6 +17,7 @@ etiqueta=0
 li1="1"
 li2="2"
 li3="3"
+li4="4"
 
 contador_operacion="4000"
 
@@ -578,7 +579,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2   
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             li=3
@@ -600,11 +602,13 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber.zfill(4)}")
             out.write(f"{coop} {newnumbber.zfill(4)}\n")
-            contador_operacion=contador_operacion+3
+            suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+            contador_operacion=suml3
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ANDA' in line: 
         numbber=re.findall('[0-99999]', line)
@@ -678,7 +682,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2    
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             gatito=bool(re.findall('#', line))
@@ -696,15 +701,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ANDB' in line: 
         numbber=re.findall('[0-99999]', line)
@@ -778,7 +786,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2    
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             gatito=bool(re.findall('#', line))
@@ -796,15 +805,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ANDCC' in line:
         numbber=re.findall('[0-99999]', line)
@@ -874,15 +886,18 @@ for line in lines:
                 out.write("(LI=2)   ")
                 print(f"10 {newnumbber}")
                 out.write(f"10 {newnumbber}\n")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2    
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2    
             
             
     if 'ADDB' in line:
@@ -957,7 +972,8 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber}")
                 out.write(f"{coop} {newnumbber}\n")
-                contador_operacion=contador_operacion+2    
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2    
             #falta la validacion para li3
             elif len(newnumbber)==3 or 4:
                 gatito=bool(re.findall('#', line))
@@ -975,15 +991,18 @@ for line in lines:
                     out.write(f"(LI={li})   ")
                     print(f"{coop} {newnumbber.zfill(4)}")
                     out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                    contador_operacion=contador_operacion+3
+                    suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                    contador_operacion=suml3
                 else:
                     print(str(contador_operacion)+"   FDR")
                     out.write(str(contador_operacion)+"   FDR")
-                    contador_operacion=contador_operacion+2
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
             
     if 'ASLA' in line:
         direct=direc1
@@ -1001,13 +1020,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("00 48")
             out.write("00 48\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
                         
     if 'ASLB' in line:
         direct=direc1
@@ -1025,13 +1046,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("00 58")
             out.write("00 58\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
     
     if 'ASLD' in line:
         direct=direc1
@@ -1049,13 +1072,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("00 59")
             out.write("00 59\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
     
     if 'ASRA' in line:
         direct=direc1
@@ -1073,13 +1098,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("00 47")
             out.write("00 47\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ASRB' in line:
         direct=direc1
@@ -1097,13 +1124,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("00 57")
             out.write("00 57\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
     
     if 'ASR' in line:
         
@@ -1172,15 +1201,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'BCLR' in line:
         
@@ -1250,11 +1282,13 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+3    
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3    
         #falta la validacion para li3
         elif len(newnumbber)==5 or 6:
             gatito=bool(re.findall('#', line))
@@ -1272,15 +1306,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(6)}")
                 out.write(f"{coop} {newnumbber.zfill(6)}\n")
-                contador_operacion=contador_operacion+3
+                suml4=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                contador_operacion=suml4
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+3
+            suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+            contador_operacion=suml3
                 
     if 'BCS' in line:
         numbber=re.findall('[0-99999]', line)
@@ -1347,11 +1384,13 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
                 
     if 'BEQ' in line:
         numbber=re.findall('[0-99999]', line)
@@ -1418,11 +1457,13 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
                 
     if 'BGE' in line:
         numbber=re.findall('[0-99999]', line)
@@ -1489,11 +1530,13 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'END' in line:
         print(contador_operacion,end='   ')
