@@ -1,0 +1,13 @@
+       ORG $4000
+4000   ABA    INH   (LI=2)   18 06
+4002   FDR
+4004   ADCA   IMM   (LI=2)   89 14
+4006   ADCA   DIR   (LI=2)   99 14
+4008   ADCA   DIR   (LI=2)   99 10
+4010   ADCB   EXT   (LI=3)   F9 1000
+4013   ADDA   IMM   (LI=2)   8B 7b
+4015   FDR
+4018   ASL    EXT   (LI=3)   78 0010
+4021   (Todavia no vemos este modo de direccionamiento)
+4023   BGND   INH   (LI=2)   00 00
+4025   END
