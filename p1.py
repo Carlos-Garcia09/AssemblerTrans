@@ -1,3 +1,4 @@
+from multiprocessing import cpu_count
 import re
 from itertools import groupby
 
@@ -13,7 +14,15 @@ direc4='EXT'
 #direc5='REL'
 etiqueta=0
 
-contador_operacion=4000
+li1="1"
+li2="2"
+li3="3"
+
+contador_operacion="4000"
+
+
+suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+
 
 print("       ORG $"+str(contador_operacion))
 
@@ -40,13 +49,15 @@ for line in lines:
             out.write("(LI=2)   ")
             print("18 06")
             out.write("18 06\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
         
     if 'ADCA' in line:
         
@@ -121,7 +132,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2   
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             gatito=bool(re.findall('#', line))
@@ -139,16 +151,19 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
             
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ADCB' in line:
         
@@ -223,7 +238,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2    
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             gatito=bool(re.findall('#', line))
@@ -241,15 +257,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ADDA' in line:
         targ=bool(re.findall(':', line))
@@ -327,7 +346,8 @@ for line in lines:
             out.write(f"(LI={li})   ")
             print(f"{coop} {newnumbber}")
             out.write(f"{coop} {newnumbber}\n")
-            contador_operacion=contador_operacion+2    
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2    
             #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             gatito=bool(re.findall('#', line))
@@ -345,15 +365,18 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR")
-                contador_operacion=contador_operacion+2
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
             
     if 'ASL' in line:
         
@@ -412,7 +435,8 @@ for line in lines:
             if gatito is True:          
                 print(str(contador_operacion)+"   FDR")
                 out.write(str(contador_operacion)+"   FDR\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
                 
             else:
                 li=3
@@ -428,11 +452,13 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                contador_operacion=contador_operacion+3
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
         else:
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR")
-            contador_operacion=contador_operacion+2   
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2   
             
     if 'BCC' in line:
         direct=direc1
@@ -452,11 +478,12 @@ for line in lines:
         """
         print("(Todavia no vemos este modo de direccionamiento)")
         out.write("(Todavia no vemos este modo de direccionamiento)\n")
-        contador_operacion=contador_operacion+2 
+        suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+        contador_operacion=suml2 
     
     if 'BGND' in line:
         direct=direc1
-        li=2
+        li=1
         detect_number=bool(re.search(r'\d', line))
         gatito=bool(re.findall('#', line))
         if detect_number is False and gatito is False:
@@ -466,17 +493,19 @@ for line in lines:
             out.write("BGND   ")
             print(f"{direc1}",end='   ')
             out.write(f"{direc1}   ")
-            print("(LI=2)",end='   ')
-            out.write("(LI=2)   ")
-            print("00 00")
-            out.write("00 00\n")
-            contador_operacion=contador_operacion+2
+            print("(LI=1)",end='   ')
+            out.write("(LI=1)   ")
+            print("00")
+            out.write("00\n")
+            suml1=hex(int(contador_operacion,16)+int(li1,16))[2:]
+            contador_operacion=suml1
             
         else:
             
             print(str(contador_operacion)+"   FDR")
             out.write(str(contador_operacion)+"   FDR\n")
-            contador_operacion=contador_operacion+2
+            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml2
     
     if 'ADDD' in line:
         numbber=re.findall('[0-99999]', line)
