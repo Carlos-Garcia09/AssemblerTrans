@@ -21,9 +21,6 @@ li4="4"
 contador_operacion="4000"
 
 
-suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-
-
 print("       ORG $"+str(contador_operacion))
 
 
