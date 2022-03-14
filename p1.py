@@ -38,6 +38,62 @@ out_et= open(filename3, 'w')
 with open(filename1, 'r') as f:
     lines = f.readlines()
 for line in lines:
+    
+    if 'FCC' in line:
+        nssn=re.findall(r'[/](.*?)[/]', line)
+        xxd=nssn[0]	
+        print(contador_operacion.zfill(4)+"   FCC    ",end="")
+        out.write(contador_operacion.zfill(4)+"   FCC    ")
+        for ch in xxd:
+            ndn=str(ord(ch))
+            ndn=int(ndn)
+            ndn=hex(ndn)
+            print(ndn[2:],end=" ")
+            out.write(ndn[2:]+" ")
+            
+        
+        print("")
+        out.write("\n")
+        lim2=str(len(xxd))
+        suml1=hex(int(contador_operacion,16)+int(lim2,16))[2:]
+        contador_operacion=suml1
+            
+        
+    if 'DC.W' in line:
+        detect_number=bool(re.search(r'\d', line))
+        if detect_number==True:
+            
+            s = [int(s) for s in re.findall(r'-?\d+\.?\d*', line)]
+            print(contador_operacion.zfill(4)+"   DC.W   ",end="")
+            out.write(contador_operacion.zfill(4)+"   DC.W   ")
+            for n in range(len(s)):
+                newnumbber=s[n]
+                newnumbber=str(newnumbber)
+                print(newnumbber.zfill(4),end=", ")
+                out.write(newnumbber.zfill(4)+", ")
+                
+            print('')
+            out.write("\n")
+            lim2=str(len(s)*2)
+            suml1=hex(int(contador_operacion,16)+int(lim2,16))[2:]
+            contador_operacion=suml1
+        else:
+            print(contador_operacion.zfill(4)+"   DC.W   00 00")
+            out.write(contador_operacion.zfill(4)+"   DC.W   00 00\n")
+            suml1=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            contador_operacion=suml1
+    if 'FILL' in line:
+        s = [int(s) for s in re.findall(r'-?\d+\.?\d*', line)]
+        n1=s[0]
+        n2=s[1]
+        lii10=str(n2)
+        cx=f"0{n1}"
+        for k in range (0,n2-1):
+            cx=cx+f" 0{n1}"
+        print(contador_operacion.zfill(4)+"   "+"FILL "+"  "+str(cx))
+        out.write(contador_operacion.zfill(4)+"   "+"FILL "+"  "+str(cx)+"\n")
+        suml1=hex(int(contador_operacion,16)+int(lii10,16))[2:]
+        contador_operacion=suml1
     if 'BSZ' in line:
         numbber=re.findall('[0-99999]', line)
         if len(numbber)<=1:
@@ -80,7 +136,8 @@ for line in lines:
                 
             print('')
             out.write("\n")
-            suml1=hex(int(contador_operacion,16)+int(li1,16))[2:]
+            lim2=str(len(s))
+            suml1=hex(int(contador_operacion,16)+int(lim2,16))[2:]
             contador_operacion=suml1
         else:
             print(contador_operacion.zfill(4)+"   DC.B   00")
