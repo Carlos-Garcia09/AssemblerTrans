@@ -3,8 +3,9 @@ from itertools import groupby
 
 
 
-filename1='P6.asm'
-filename2='p6.lst'
+filename1='P7.asm'
+filename2='p7.lst'
+filename3='Et.tabsim'
 li=0
 direc1='INH'
 direc2='IMM'
@@ -127,8 +128,8 @@ for line in lines:
             out.write(direct+"   ")
             print(f"(LI={li})",end='   ')
             out.write(f"(LI={li})   ")
-            print(f"{coop} {newnumbber}")
-            out.write(f"{coop} {newnumbber}\n")
+            print(f"{coop} {newnumbber.zfill(2)}")
+            out.write(f"{coop} {newnumbber.zfill(2)}\n")
             suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
             contador_operacion=suml2   
         #falta la validacion para li3
@@ -561,22 +562,34 @@ for line in lines:
                 direct=direc2
                 coop='C3'
                 li=3
+                print(contador_operacion,end='   ')
+                out.write(str(contador_operacion)+"   ")
+                print("ADDD",end='   ')
+                out.write("ADDD   ")
+                print(direct,end='   ')
+                out.write(direct+"   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {newnumbber.zfill(4)}")
+                out.write(f"{coop} {newnumbber.zfill(4)}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
             else:
                 li=2
                 direct=direc3
                 coop='D3'
-            print(contador_operacion,end='   ')
-            out.write(str(contador_operacion)+"   ")
-            print("ADDD",end='   ')
-            out.write("ADDD   ")
-            print(direct,end='   ')
-            out.write(direct+"   ")
-            print(f"(LI={li})",end='   ')
-            out.write(f"(LI={li})   ")
-            print(f"{coop} {newnumbber}")
-            out.write(f"{coop} {newnumbber}\n")
-            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-            contador_operacion=suml2   
+                print(contador_operacion,end='   ')
+                out.write(str(contador_operacion)+"   ")
+                print("ADDD",end='   ')
+                out.write("ADDD   ")
+                print(direct,end='   ')
+                out.write(direct+"   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {newnumbber.zfill(2)}")
+                out.write(f"{coop} {newnumbber.zfill(2)}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2   
         #falta la validacion para li3
         elif len(newnumbber)==3 or 4:
             li=3

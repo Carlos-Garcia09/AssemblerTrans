@@ -1,0 +1,8 @@
+       ORG $4000
+4000   ADCA   IMM   (LI=2)   89 0f
+4002   ADCA   DIR   (LI=2)   99 0f
+4004   ADCA   DIR   (LI=2)   99 96
+4006   ADCA   EXT   (LI=3)   B9 05dc
+4009   ADDD   IMM   (LI=3)   C3 000a
+400b   ADDD   DIR   (LI=2)   D3 0a
+400d   END
