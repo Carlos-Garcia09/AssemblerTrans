@@ -12,25 +12,103 @@ direc2='IMM'
 direc3='DIR'
 direc4='EXT'
 #direc5='REL'
-etiqueta=0
+etiqueta1=0
+etiqueta2=0
+etiqueta3=0
+etiqueta4=0
+Equ_value=0
 
 li1="1"
 li2="2"
 li3="3"
 li4="4"
 
-contador_operacion="4000"
+contador_operacion="0000"
 
 
-print("       ORG $"+str(contador_operacion))
+
 
 
 out= open(filename2, 'w')
-out.write("       ORG $"+str(contador_operacion)+"\n")
+out_et= open(filename3, 'w')
+
 
 with open(filename1, 'r') as f:
     lines = f.readlines()
 for line in lines:
+    if 'START' in line:
+        print(str(contador_operacion)+"   Start")
+        out.write(str(contador_operacion)+"   Start\n")
+        contador_operacion="0000"
+        
+    if 'ORG' in line:
+        contador_operacion="4000"
+        print("       ORG $"+str(contador_operacion))
+        out.write("       ORG $"+str(contador_operacion)+"\n")
+    if 'E1' in line:
+        etiqueta1=contador_operacion
+    if 'E2' in line:
+        etiqueta2=contador_operacion
+    if 'E3' in line:
+        etiqueta3=contador_operacion  
+    if 'E4' in line:
+        etiqueta4=contador_operacion
+                
+    if 'EQU' in line:
+        numbber=re.findall('[0-99999]', line)
+        if len(numbber)<=2:
+            newnumbber=int(numbber[1])
+        elif len(numbber)<=3:
+            newnumbber=int(numbber[1]+numbber[2])
+        elif len(numbber)<=4:
+            newnumbber=int(numbber[1]+numbber[2]+numbber[3])
+        elif len(numbber)<=5:
+            newnumbber=int(numbber[1]+numbber[2]+numbber[3]+numbber[4])
+        elif len(numbber)<=6:
+            newnumbber=int(numbber[1]+numbber[2]+numbber[3]+numbber[4]+numbber[5])    
+        else:
+            print("Error, todavia no aceptamos numeros tan grandes")
+        ppp=newnumbber
+        arroba=bool(re.findall('@', line))
+        porc=bool(re.findall('%', line))
+        smps=line.find('$')
+            
+        if arroba is False:
+            pass
+            if porc is False:
+                pass
+                if smps == -1:
+                    newnumbber=hex(newnumbber)[2:]
+                        
+            
+        if arroba is True:
+            newnumbberoc=str(newnumbber)
+            d=int(newnumbberoc,8)
+            h=hex(d)[2:]
+            newnumbber=h
+                
+        elif porc is True:
+                newnumbberoc=str(newnumbber)
+                for digito in newnumbberoc:
+                    if digito !='0' and digito !='1':
+                        print('No se puede ingresar esto, ya que es binario')
+                    else:
+                        d=int(newnumbberoc,2)
+                        h=hex(d)[2:]
+                        newnumbber=h
+            
+        if smps != -1:
+                ppp=str(newnumbber)
+                newnumbber=ppp
+        if line[0] == 'E':
+            if line[1] == '1':
+                out_et.write(str(etiqueta1)+" E1 "+str(newnumbber)+"\n")
+            elif line[1] == '2':
+                out_et.write(str(etiqueta2)+" E2 "+str(newnumbber)+"\n")
+            elif line[1] == '3':
+                out_et.write(str(etiqueta3)+" E3 "+str(newnumbber)+"\n")
+        print(contador_operacion+"   EQU")
+        out.write(str(contador_operacion)+"   EQU\n")
     if 'ABA' in line:
         direct=direc1
         li=2
@@ -120,8 +198,8 @@ for line in lines:
             else:
                 direct=direc3
                 coop=99
-            print(contador_operacion,end='   ')
-            out.write(str(contador_operacion)+"   ")
+            print(contador_operacion.zfill(4),end='   ')
+            out.write(str(contador_operacion.zfill(4))+"   ")
             print("ADCA",end='   ')
             out.write("ADCA   ")
             print(direct,end='   ')
@@ -139,8 +217,8 @@ for line in lines:
                 li=3
                 coop='B9'
                 direct=direc4
-                print(contador_operacion,end='   ')
-                out.write(str(contador_operacion)+"   ")
+                print(contador_operacion.zfill(4),end='   ')
+                out.write(str(contador_operacion.zfill(4))+"   ")
                 print("ADCA",end='   ')
                 out.write("ADCA   ")
                 print(direct,end='   ')
@@ -152,8 +230,8 @@ for line in lines:
                 suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
                 contador_operacion=suml3
             else:
-                print(str(contador_operacion)+"   FDR")
-                out.write(str(contador_operacion)+"   FDR")
+                print(str(contador_operacion.zfill(4))+"   FDR")
+                out.write(str(contador_operacion.zfill(4))+"   FDR")
                 suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
                 contador_operacion=suml2
             
@@ -562,8 +640,8 @@ for line in lines:
                 direct=direc2
                 coop='C3'
                 li=3
-                print(contador_operacion,end='   ')
-                out.write(str(contador_operacion)+"   ")
+                print(contador_operacion.zfill(4),end='   ')
+                out.write(str(contador_operacion.zfill(4))+"   ")
                 print("ADDD",end='   ')
                 out.write("ADDD   ")
                 print(direct,end='   ')
@@ -578,8 +656,8 @@ for line in lines:
                 li=2
                 direct=direc3
                 coop='D3'
-                print(contador_operacion,end='   ')
-                out.write(str(contador_operacion)+"   ")
+                print(contador_operacion.zfill(4),end='   ')
+                out.write(str(contador_operacion.zfill(4))+"   ")
                 print("ADDD",end='   ')
                 out.write("ADDD   ")
                 print(direct,end='   ')
@@ -601,8 +679,8 @@ for line in lines:
             else:
                 direct=direc4
                 coop='F3'
-            print(contador_operacion,end='   ')
-            out.write(str(contador_operacion)+"   ")
+            print(contador_operacion.zfill(4),end='   ')
+            out.write(str(contador_operacion.zfill(4))+"   ")
             print("ADDD",end='   ')
             out.write("ADDD   ")
             print(direct,end='   ')
@@ -614,8 +692,8 @@ for line in lines:
             suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
             contador_operacion=suml3
         else:
-            print(str(contador_operacion)+"   FDR")
-            out.write(str(contador_operacion)+"   FDR")
+            print(str(contador_operacion.zfill(4))+"   FDR")
+            out.write(str(contador_operacion.zfill(4))+"   FDR")
             suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
             contador_operacion=suml2
             
@@ -1548,8 +1626,8 @@ for line in lines:
             contador_operacion=suml2
             
     if 'END' in line:
-        print(contador_operacion,end='   ')
-        out.write(str(contador_operacion)+"   ")
+        print(contador_operacion.zfill(4),end='   ')
+        out.write(str(contador_operacion.zfill(4))+"   ")
         print("END")
         out.write("END\n")    
 
