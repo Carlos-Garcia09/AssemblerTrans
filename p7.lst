@@ -7,5 +7,8 @@
 0000   ADCA   DIR   (LI=2)   99 96
 0002   ADCA   EXT   (LI=3)   B9 05dc
 0005   ADDD   IMM   (LI=3)   C3 000a
-0007   ADDD   DIR   (LI=2)   D3 0a
-0009   END
+0008   ADDD   DIR   (LI=2)   D3 0a
+000a   DC.B   00
+000b   DC.B   0a, 
+000c   DC.B   0a, 0b, 
+000d   END

@@ -36,6 +36,28 @@ out_et= open(filename3, 'w')
 with open(filename1, 'r') as f:
     lines = f.readlines()
 for line in lines:
+    if 'DC.B' in line:
+        detect_number=bool(re.search(r'\d', line))
+        if detect_number==True:
+            
+            s = [int(s) for s in re.findall(r'-?\d+\.?\d*', line)]
+            print(contador_operacion.zfill(4)+"   DC.B   ",end="")
+            out.write(contador_operacion.zfill(4)+"   DC.B   ")
+            for n in s:
+                
+                newnumbber=hex(n)[2:]
+                print(newnumbber.zfill(2),end=", ")
+                out.write(newnumbber.zfill(2)+", ")
+                
+            print('')
+            out.write("\n")
+            suml1=hex(int(contador_operacion,16)+int(li1,16))[2:]
+            contador_operacion=suml1
+        else:
+            print(contador_operacion.zfill(4)+"   DC.B   00")
+            out.write(contador_operacion.zfill(4)+"   DC.B   00\n")
+            suml1=hex(int(contador_operacion,16)+int(li1,16))[2:]
+            contador_operacion=suml1
     if 'START' in line:
         print(str(contador_operacion)+"   Start")
         out.write(str(contador_operacion)+"   Start\n")
@@ -650,8 +672,8 @@ for line in lines:
                 out.write(f"(LI={li})   ")
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-                contador_operacion=suml2
+                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                contador_operacion=suml3
             else:
                 li=2
                 direct=direc3
@@ -675,6 +697,7 @@ for line in lines:
             
             if gatito is True:          
                 direct=direc2
+
                 coop='C3'
             else:
                 direct=direc4
@@ -690,7 +713,7 @@ for line in lines:
             print(f"{coop} {newnumbber.zfill(4)}")
             out.write(f"{coop} {newnumbber.zfill(4)}\n")
             suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-            contador_operacion=suml3
+            contador_operacion=suml3    
         else:
             print(str(contador_operacion.zfill(4))+"   FDR")
             out.write(str(contador_operacion.zfill(4))+"   FDR")
