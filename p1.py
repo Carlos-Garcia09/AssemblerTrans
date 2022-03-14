@@ -1,3 +1,4 @@
+from operator import ne
 import re
 from itertools import groupby
 
@@ -23,6 +24,7 @@ li2="2"
 li3="3"
 li4="4"
 
+
 contador_operacion="0000"
 
 
@@ -36,6 +38,33 @@ out_et= open(filename3, 'w')
 with open(filename1, 'r') as f:
     lines = f.readlines()
 for line in lines:
+    if 'BSZ' in line:
+        numbber=re.findall('[0-99999]', line)
+        if len(numbber)<=1:
+            newnumbber=int(numbber[0])
+        elif len(numbber)<=2:
+            newnumbber=int(numbber[0]+numbber[1])
+        elif len(numbber)<=3:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2])
+        elif len(numbber)<=4:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
+        elif len(numbber)<=5:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+        else:
+            print("Error, todavia no aceptamos numeros tan grandes")
+        
+        cerosnumber=newnumbber*2
+        lii10=str(newnumbber)
+        
+        
+        cx="00"
+        for k in range (0,newnumbber-1):
+            cx=cx+" 00"
+            
+        print(contador_operacion.zfill(4)+"   "+"BSZ "+"   "+str(cx))
+        out.write(contador_operacion.zfill(4)+"   "+"BSZ "+"   "+str(cx)+"\n")
+        suml1=hex(int(contador_operacion,16)+int(lii10,16))[2:]
+        contador_operacion=suml1
     if 'DC.B' in line:
         detect_number=bool(re.search(r'\d', line))
         if detect_number==True:
