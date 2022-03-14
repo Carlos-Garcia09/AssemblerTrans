@@ -38,7 +38,30 @@ out_et= open(filename3, 'w')
 with open(filename1, 'r') as f:
     lines = f.readlines()
 for line in lines:
-    
+    if 'FCB' in line:
+        numbber=re.findall('[0-99999]', line)
+        if len(numbber)<=1:
+            newnumbber=int(numbber[0])
+        elif len(numbber)<=2:
+            newnumbber=int(numbber[0]+numbber[1])
+        elif len(numbber)<=3:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2])
+        elif len(numbber)<=4:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
+        elif len(numbber)<=5:
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+        else:
+            print("Error, todavia no aceptamos numeros tan grandes")
+        newnumbber=hex(newnumbber)[2:]
+        print(contador_operacion.zfill(4),end='   ')
+        out.write(str(contador_operacion.zfill(4))+"   ")
+        print("FCB",end='    ')
+        out.write("FCB    ")
+        
+        print(f"{newnumbber.zfill(2)}")
+        out.write(f"{newnumbber.zfill(2)}\n")
+        suml2=hex(int(contador_operacion,16)+int(li1,16))[2:]
+        contador_operacion=suml2
     if 'FCC' in line:
         nssn=re.findall(r'[/](.*?)[/]', line)
         xxd=nssn[0]	
