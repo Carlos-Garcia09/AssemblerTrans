@@ -1,0 +1,16 @@
+0000   Start
+0000   ABA    INH   (LI=2)   18 06
+0002   ADCA   IMM   (LI=2)   89 18
+       ORG $4000
+4000   ABA    INH   (LI=2)   18 06
+4002   EQU
+4002   ADDD   IDX   (LI=2)   E3 01
+4004   ADDD   IDX   (LI=2)   E3 02
+4006   ADDD   IDX   (LI=2)   E3 1e
+4008   ADDD   IDX   (LI=2)   E3 d0
+400a   FDR
+400c   FDR
+400e   BNE    REL   (LI=2)   26 06
+4010   ADDD   IDX   (LI=3)   E3 f0 c8
+4013   ADDD   IDX   (LI=3)   E3 f1 38
+4016   END

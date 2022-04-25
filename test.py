@@ -1,6 +1,5 @@
+nummm=-32768
+nummm=hex(nummm)
+nummm=hex(int(nummm,16) + 16**4)[2:]
 
-p=hex(16384)[2:]
-li2="2"
-for i in range(0,10):
-    p=hex(int(p,16)+int(li2,16))[2:]
-    print(p)
+print(nummm)

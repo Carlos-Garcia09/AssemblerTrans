@@ -1,20 +1,22 @@
 from operator import ne
+from queue import PriorityQueue
 import re
 from itertools import groupby
 
 
 
-filename1='P7.asm'
-filename2='p7.lst'
+filename1='P11.asm'
+filename2='p11.lst'
 filename3='Et.tabsim'
 li=0
 direc1='INH'
 direc2='IMM'
 direc3='DIR'
 direc4='EXT'
-#direc5='REL'
-etiqueta1=0
-etiqueta2=0
+direc5='REL'
+direc6='IDX'
+etiqueta1='0'
+etiqueta2='0'
 etiqueta3=0
 etiqueta4=0
 Equ_value=0
@@ -24,6 +26,12 @@ li2="2"
 li3="3"
 li4="4"
 
+aux_var=0
+aux_puer=0
+aux_fin=0
+
+rr='0'
+signn='0'
 
 contador_operacion="0000"
 
@@ -176,27 +184,41 @@ for line in lines:
         contador_operacion="4000"
         print("       ORG $"+str(contador_operacion))
         out.write("       ORG $"+str(contador_operacion)+"\n")
-    if 'E1' in line:
-        etiqueta1=contador_operacion
-    if 'E2' in line:
-        etiqueta2=contador_operacion
-    if 'E3' in line:
-        etiqueta3=contador_operacion  
+    if 'VAR2' in line:
+        if aux_var==0:
+            etiqueta1=contador_operacion.zfill(4)
+            out_et.write("VAR2 "+str(etiqueta1)+"\n")
+            aux_var=1
+        else:
+            pass
+    if 'PUERTA' in line:
+        if aux_puer==0:
+            etiqueta2=contador_operacion.zfill(4)
+            aux_puer=1
+        else:
+            pass
+    if 'FIN' in line:
+        if aux_fin==0:
+            etiqueta3='4016'
+            out_et.write("FIN "+str(etiqueta3)+"\n")
+            aux_fin=1
+        else:
+            pass 
     if 'E4' in line:
         etiqueta4=contador_operacion
                 
     if 'EQU' in line:
         numbber=re.findall('[0-99999]', line)
         if len(numbber)<=2:
-            newnumbber=int(numbber[1])
+            newnumbber=int(numbber[0])
         elif len(numbber)<=3:
-            newnumbber=int(numbber[1]+numbber[2])
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2])
         elif len(numbber)<=4:
-            newnumbber=int(numbber[1]+numbber[2]+numbber[3])
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
         elif len(numbber)<=5:
-            newnumbber=int(numbber[1]+numbber[2]+numbber[3]+numbber[4])
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
         elif len(numbber)<=6:
-            newnumbber=int(numbber[1]+numbber[2]+numbber[3]+numbber[4]+numbber[5])    
+            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
         else:
             print("Error, todavia no aceptamos numeros tan grandes")
         ppp=newnumbber
@@ -231,6 +253,10 @@ for line in lines:
         if smps != -1:
                 ppp=str(newnumbber)
                 newnumbber=ppp
+        
+        if 'PUERTA' in line:
+            out_et.write("PUERTA "+str(newnumbber)+"\n")
+            etiqueta2=newnumbber     
         if line[0] == 'E':
             if line[1] == '1':
                 out_et.write(str(etiqueta1)+" E1 "+str(newnumbber)+"\n")
@@ -270,11 +296,11 @@ for line in lines:
         
         numbber=re.findall('[0-99999]', line)
         if len(numbber)<=1:
-            newnumbber=int(numbber[0])
+            newnumbber=int(numbber[1])
         elif len(numbber)<=2:
-            newnumbber=int(numbber[0]+numbber[1])
+            newnumbber=int(numbber[1]+numbber[2])
         elif len(numbber)<=3:
-            newnumbber=int(numbber[0]+numbber[1]+numbber[2])
+            newnumbber=int(numbber[1]+numbber[2])
         elif len(numbber)<=4:
             newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
         elif len(numbber)<=5:
@@ -688,6 +714,86 @@ for line in lines:
         suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
         contador_operacion=suml2 
     
+    if 'BNE' in line:
+        object_code=26
+        if 'VAR2' in line:
+            next_code=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            result=hex(int(etiqueta1,16)-int(next_code,16))
+            result1=hex(int(result,16) + 16**2)[2:]
+            if len(result1)<=2:
+                li=2
+                coop=object_code
+                direct=direc5
+                print(contador_operacion,end='   ')
+                out.write(str(contador_operacion)+"   ")
+                print("BNE",end='   ')
+                out.write("BNE   ")
+                print(f" {direc5}",end='   ')
+                out.write(f" {direc5}   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {result1}")
+                out.write(f"{coop} {result1}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+            else:
+                print(str(contador_operacion)+"   FDR")
+                out.write(str(contador_operacion)+"   FDR"+"\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+        if 'PUERTA' in line:
+            next_code=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            result=hex(int(etiqueta2,16)-int(next_code,16))
+            result1=hex(int(result,16) + 16**2)[2:]
+            if len(result1)<=2:
+                li=2
+                coop=object_code
+                direct=direc5
+                print(contador_operacion,end='   ')
+                out.write(str(contador_operacion)+"   ")
+                print("BNE",end='   ')
+                out.write("BNE   ")
+                print(f" {direc5}",end='   ')
+                out.write(f" {direc5}   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {result1}")
+                out.write(f"{coop} {result1}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+            else:
+                print(str(contador_operacion)+"   FDR")
+                out.write(str(contador_operacion)+"   FDR"+"\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+        if 'FIN' in line:
+            next_code=hex(int(contador_operacion,16)+int(li2,16))[2:]
+            result=hex(int(etiqueta3,16)-int(next_code,16))[2:]
+            result1=hex(int(result,16) + 16**2)[2:]
+            if len(result)<=2:
+                li=2
+                coop=object_code
+                direct=direc5
+                print(contador_operacion,end='   ')
+                out.write(str(contador_operacion)+"   ")
+                print("BNE",end='   ')
+                out.write("BNE   ")
+                print(f" {direc5}",end='   ')
+                out.write(f" {direc5}   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {result.zfill(2)}")
+                out.write(f"{coop} {result.zfill(2)}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+            else:
+                print(str(contador_operacion)+"   FDR")
+                out.write(str(contador_operacion)+"   FDR"+"\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+        
+    
+    
     if 'BGND' in line:
         direct=direc1
         li=1
@@ -718,21 +824,29 @@ for line in lines:
         numbber=re.findall('[0-99999]', line)
         if len(numbber)<=1:
             newnumbber=int(numbber[0])
+            nummm=int(numbber[0])
         elif len(numbber)<=2:
             newnumbber=int(numbber[0]+numbber[1])
+            nummm=int(numbber[0]+numbber[1])
         elif len(numbber)<=3:
             newnumbber=int(numbber[0]+numbber[1]+numbber[2])
+            nummm=int(numbber[0]+numbber[1]+numbber[2])
         elif len(numbber)<=4:
             newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
+            nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
         elif len(numbber)<=5:
             newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+            nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
         else:
             print("Error, todavia no aceptamos numeros tan grandes")
         
         ppp=newnumbber
         arroba=bool(re.findall('@', line))
+        coma=bool(re.findall(',', line))
         porc=bool(re.findall('%', line))
         smps=line.find('$')
+        neggg=line.find('-')
+        
         
         if arroba is False:
             pass
@@ -762,15 +876,182 @@ for line in lines:
             ppp=str(newnumbber)
             newnumbber=ppp
         
-        
-        
-        
-        if len(newnumbber)<=2:
-            gatito=bool(re.findall('#', line))
-            if gatito is True:          
-                direct=direc2
-                coop='C3'
+        if coma is True:
+            direct=direc6
+            if neggg != -1:
+                nummm=nummm*-1
+            if nummm >= -16  and nummm <= 15:
+                if 'X' in line:
+                    rr='00'
+                if 'Y' in line:
+                    rr='01'
+                if 'SP' in line:
+                    rr='10'
+                if 'PC' in line:
+                    rr='11'
+                if nummm <0:
+                    signn='1'
+                    nummm=hex(nummm)
+                    nummm=hex(int(nummm,16) + 16**2)[3:]
+                    nummm=bin(int(nummm,16))[2:].zfill(4)
+                    
+                else:
+                    signn='0'
+                    nummm=hex(nummm)[2:]
+                    nummm=bin(int(nummm,16))[2:].zfill(4)
+                numerocheto=str(rr)+str(signn)+str(nummm)
+                numerocheto1=(str(rr)+str('0')+str(signn)+str(nummm))[4:]
+                numerocheto2=(str(rr)+str('0')+str(signn)+str(nummm))[:4]
+                d=int(numerocheto1,2)
+                h=hex(d)[2:]
+                nummm1=h
+                d2=int(numerocheto2,2)
+                h2=hex(d2)[2:]
+                nummm2=h2
+                numerchetau=str(nummm2)+str(nummm1)
+                direct=direc6
+                coop='E3'
+                li=2
+                print(contador_operacion.zfill(4),end='   ')
+                out.write(str(contador_operacion.zfill(4))+"   ")
+                print("ADDD",end='   ')
+                out.write("ADDD   ")
+                print(direct,end='   ')
+                out.write(direct+"   ")
+                print(f"(LI={li})",end='   ')
+                out.write(f"(LI={li})   ")
+                print(f"{coop} {numerchetau}")
+                out.write(f"{coop} {numerchetau}\n")
+                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                contador_operacion=suml2
+                
+            elif (nummm >= -256  and nummm <= -17) or (nummm >=16 and nummm <=255):
+                if 'X' in line:
+                    rr='00'
+                if 'Y' in line:
+                    rr='01'
+                if 'SP' in line:
+                    rr='10'
+                if 'PC' in line:
+                    rr='11'
+                if nummm <0:
+                    signn='1'
+                    nummm=hex(nummm)
+                    nummm=hex(int(nummm,16) + 16**2)[2:]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('1'))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('1'))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=3
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau} {nummm}")
+                    out.write(f"{coop} {numerchetau} {nummm}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                    contador_operacion=suml2
+                else:
+                    signn='0'
+                    nummm=hex(nummm)[2:]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('0'))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('0'))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=3
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau} {nummm}")
+                    out.write(f"{coop} {numerchetau} {nummm}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                    contador_operacion=suml2
+            elif (nummm >= -32768  and nummm <= -257) or (nummm >=256 and nummm <=65535):
+                if 'X' in line:
+                    rr='00'
+                if 'Y' in line:
+                    rr='01'
+                if 'SP' in line:
+                    rr='10'
+                if 'PC' in line:
+                    rr='11'
+                if nummm <0:
+                    signn='1'
+                    nummm=hex(nummm)
+                    nummm=hex(int(nummm,16) + 16**4)[2:]
+                else:
+                    signn='0'
+                    nummm=hex(nummm)[2:]
+        else:
+            if len(newnumbber)<=2:
+                gatito=bool(re.findall('#', line))
+                if gatito is True:          
+                    direct=direc2
+                    coop='C3'
+                    li=3
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {newnumbber.zfill(4)}")
+                    out.write(f"{coop} {newnumbber.zfill(4)}\n")
+                    suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                    contador_operacion=suml3
+                else:
+                    li=2
+                    direct=direc3
+                    coop='D3'
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {newnumbber.zfill(2)}")
+                    out.write(f"{coop} {newnumbber.zfill(2)}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2   
+            #falta la validacion para li3
+            elif len(newnumbber)==3 or 4:
                 li=3
+                gatito=bool(re.findall('#', line))
+                
+                if gatito is True:          
+                    direct=direc2
+
+                    coop='C3'
+                else:
+                    direct=direc4
+                    coop='F3'
                 print(contador_operacion.zfill(4),end='   ')
                 out.write(str(contador_operacion.zfill(4))+"   ")
                 print("ADDD",end='   ')
@@ -782,52 +1063,12 @@ for line in lines:
                 print(f"{coop} {newnumbber.zfill(4)}")
                 out.write(f"{coop} {newnumbber.zfill(4)}\n")
                 suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-                contador_operacion=suml3
+                contador_operacion=suml3    
             else:
-                li=2
-                direct=direc3
-                coop='D3'
-                print(contador_operacion.zfill(4),end='   ')
-                out.write(str(contador_operacion.zfill(4))+"   ")
-                print("ADDD",end='   ')
-                out.write("ADDD   ")
-                print(direct,end='   ')
-                out.write(direct+"   ")
-                print(f"(LI={li})",end='   ')
-                out.write(f"(LI={li})   ")
-                print(f"{coop} {newnumbber.zfill(2)}")
-                out.write(f"{coop} {newnumbber.zfill(2)}\n")
+                print(str(contador_operacion.zfill(4))+"   FDR")
+                out.write(str(contador_operacion.zfill(4))+"   FDR")
                 suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-                contador_operacion=suml2   
-        #falta la validacion para li3
-        elif len(newnumbber)==3 or 4:
-            li=3
-            gatito=bool(re.findall('#', line))
-            
-            if gatito is True:          
-                direct=direc2
-
-                coop='C3'
-            else:
-                direct=direc4
-                coop='F3'
-            print(contador_operacion.zfill(4),end='   ')
-            out.write(str(contador_operacion.zfill(4))+"   ")
-            print("ADDD",end='   ')
-            out.write("ADDD   ")
-            print(direct,end='   ')
-            out.write(direct+"   ")
-            print(f"(LI={li})",end='   ')
-            out.write(f"(LI={li})   ")
-            print(f"{coop} {newnumbber.zfill(4)}")
-            out.write(f"{coop} {newnumbber.zfill(4)}\n")
-            suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-            contador_operacion=suml3    
-        else:
-            print(str(contador_operacion.zfill(4))+"   FDR")
-            out.write(str(contador_operacion.zfill(4))+"   FDR")
-            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-            contador_operacion=suml2
+                contador_operacion=suml2
             
     if 'ANDA' in line: 
         numbber=re.findall('[0-99999]', line)
@@ -1762,6 +2003,7 @@ for line in lines:
         out.write(str(contador_operacion.zfill(4))+"   ")
         print("END")
         out.write("END\n")    
+
 
 
 out.close()
