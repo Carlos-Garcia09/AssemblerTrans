@@ -938,8 +938,8 @@ for line in lines:
                     signn='1'
                     nummm=hex(nummm)
                     nummm=hex(int(nummm,16) + 16**2)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('1'))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('1'))[:4]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
                     d=int(numerocheto1,2)
                     h=hex(d)[2:]
                     nummm1=h
@@ -965,8 +965,8 @@ for line in lines:
                 else:
                     signn='0'
                     nummm=hex(nummm)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('0'))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('0'))[:4]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
                     d=int(numerocheto1,2)
                     h=hex(d)[2:]
                     nummm1=h
@@ -1002,9 +1002,57 @@ for line in lines:
                     signn='1'
                     nummm=hex(nummm)
                     nummm=hex(int(nummm,16) + 16**4)[2:]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=4
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
+                    out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                    contador_operacion=suml2
                 else:
                     signn='0'
                     nummm=hex(nummm)[2:]
+                    numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=4
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
+                    out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                    contador_operacion=suml2
         else:
             if len(newnumbber)<=2:
                 gatito=bool(re.findall('#', line))
