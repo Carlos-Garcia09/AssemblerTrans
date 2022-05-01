@@ -1,5 +1,7 @@
-nummm=-2050
-nummm=hex(nummm)
-nummm=hex(int(nummm,16) + 16**4)[2:]
+import re
+string = 'ADDD A,PC'
+if 'ADDD' in string:
+    arr = re.split('[ [,.]', string)[1]
+    print(arr)
 
-print(nummm)
+

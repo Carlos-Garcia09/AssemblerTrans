@@ -1,0 +1,18 @@
+       ORG $4000
+4000   ABA    INH   (LI=2)   18 06
+4002   EQU
+4002   ADDD   IDX   (LI=2)   E3 01
+4004   ADDD   IDX   (LI=2)   E3 02
+4006   ADDD   IDX   (LI=2)   E3 1e
+4008   ADDD   IDX   (LI=2)   E3 d0
+400a   ADDD   IDX   (LI=3)   E3 f0 c8
+400d   ADDD   IDX   (LI=3)   E3 f1 38
+4010   ADDD   IDX   (LI=4)   E3 fb 00 2d
+4014   FDR
+4018   ADDD   IDX   (LI=4)   E3 fb 01 00
+401c   ADDD   IDX   (LI=4)   E3 fb 00 2d
+4020   ADDD   IDX   (LI=2)   E3 ff
+4022   FDR
+4024   ADDD   IDX   (LI=2)   E3 fe
+4026   ADDD   IDX   (LI=2)   E3 fc
+4028   END

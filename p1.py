@@ -5,8 +5,8 @@ from itertools import groupby
 
 
 
-filename1='P11.asm'
-filename2='p11.lst'
+filename1='P13.asm'
+filename2='p13.lst'
 filename3='Et.tabsim'
 li=0
 direc1='INH'
@@ -199,7 +199,7 @@ for line in lines:
             pass
     if 'FIN' in line:
         if aux_fin==0:
-            etiqueta3='4016'
+            etiqueta3='4028'
             out_et.write("FIN "+str(etiqueta3)+"\n")
             aux_fin=1
         else:
@@ -821,245 +821,485 @@ for line in lines:
             contador_operacion=suml2
     
     if 'ADDD' in line:
-        numbber=re.findall('[0-99999]', line)
-        if len(numbber)<=1:
-            newnumbber=int(numbber[0])
-            nummm=int(numbber[0])
-        elif len(numbber)<=2:
-            newnumbber=int(numbber[0]+numbber[1])
-            nummm=int(numbber[0]+numbber[1])
-        elif len(numbber)<=3:
-            newnumbber=int(numbber[0]+numbber[1]+numbber[2])
-            nummm=int(numbber[0]+numbber[1]+numbber[2])
-        elif len(numbber)<=4:
-            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
-            nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
-        elif len(numbber)<=5:
-            newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
-            nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+        parc=line.find('[')
+        arr = re.split('[ ,.]', line)[1]
+        nonumber=any(chr.isdigit() for chr in line)
+        if nonumber is False:
+            if parc != -1:
+                if 'D' in arr:
+                    if 'X' in line:
+                        rr='00'
+                    if 'Y' in line:
+                        rr='01'
+                    if 'SP' in line:
+                        rr='10'
+                    if 'PC' in line:
+                        rr='11'
+                    numerocheto1=(str('111')+str(rr)+str('111'))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('111'))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=2
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau}")
+                    out.write(f"{coop} {numerchetau}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
+                        
+                else:
+                    print(str(contador_operacion.zfill(4))+"   FDR")
+                    out.write(str(contador_operacion.zfill(4))+"   FDR\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
+            else:
+                if 'A' in arr:
+                    if 'X' in line:
+                        rr='00'
+                    if 'Y' in line:
+                        rr='01'
+                    if 'SP' in line:
+                        rr='10'
+                    if 'PC' in line:
+                        rr='11'
+                    aa='00'
+                    numerocheto1=(str('111')+str(rr)+str('1')+str(aa))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('1')+str(aa))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=2
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau}")
+                    out.write(f"{coop} {numerchetau}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
+                elif 'B' in arr:
+                    if 'X' in line:
+                        rr='00'
+                    if 'Y' in line:
+                        rr='01'
+                    if 'SP' in line:
+                        rr='10'
+                    if 'PC' in line:
+                        rr='11'
+                    aa='01'
+                    numerocheto1=(str('111')+str(rr)+str('1')+str(aa))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('1')+str(aa))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=2
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau}")
+                    out.write(f"{coop} {numerchetau}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
+                elif 'D' in arr:
+                    if 'X' in line:
+                        rr='00'
+                    if 'Y' in line:
+                        rr='01'
+                    if 'SP' in line:
+                        rr='10'
+                    if 'PC' in line:
+                        rr='11'
+                    aa='10'
+                    numerocheto1=(str('111')+str(rr)+str('1')+str(aa))[4:]
+                    numerocheto2=(str('111')+str(rr)+str('1')+str(aa))[:4]
+                    d=int(numerocheto1,2)
+                    h=hex(d)[2:]
+                    nummm1=h
+                    d2=int(numerocheto2,2)
+                    h2=hex(d2)[2:]
+                    nummm2=h2
+                    numerchetau=str(nummm2)+str(nummm1)
+                    direct=direc6
+                    coop='E3'
+                    li=2
+                    print(contador_operacion.zfill(4),end='   ')
+                    out.write(str(contador_operacion.zfill(4))+"   ")
+                    print("ADDD",end='   ')
+                    out.write("ADDD   ")
+                    print(direct,end='   ')
+                    out.write(direct+"   ")
+                    print(f"(LI={li})",end='   ')
+                    out.write(f"(LI={li})   ")
+                    print(f"{coop} {numerchetau}")
+                    out.write(f"{coop} {numerchetau}\n")
+                    suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                    contador_operacion=suml2
+                else:
+                    print(str(contador_operacion.zfill(4))+"   FDR")
+                    out.write(str(contador_operacion.zfill(4))+"   FDR\n")
+                    suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                    contador_operacion=suml2
         else:
-            print("Error, todavia no aceptamos numeros tan grandes")
-        
-        ppp=newnumbber
-        arroba=bool(re.findall('@', line))
-        coma=bool(re.findall(',', line))
-        porc=bool(re.findall('%', line))
-        smps=line.find('$')
-        neggg=line.find('-')
-        
-        
-        if arroba is False:
-            pass
-            if porc is False:
-                pass
-                if smps == -1:
-                    newnumbber=hex(newnumbber)[2:]
-                    
-        
-        if arroba is True:
-            newnumbberoc=str(newnumbber)
-            d=int(newnumbberoc,8)
-            h=hex(d)[2:]
-            newnumbber=h
+            numbber=re.findall('[0-99999]', line)
+            if len(numbber)<=1:
+                newnumbber=int(numbber[0])
+                nummm=int(numbber[0])
+            elif len(numbber)<=2:
+                newnumbber=int(numbber[0]+numbber[1])
+                nummm=int(numbber[0]+numbber[1])
+            elif len(numbber)<=3:
+                newnumbber=int(numbber[0]+numbber[1]+numbber[2])
+                nummm=int(numbber[0]+numbber[1]+numbber[2])
+            elif len(numbber)<=4:
+                newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
+                nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3])
+            elif len(numbber)<=5:
+                newnumbber=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+                nummm=int(numbber[0]+numbber[1]+numbber[2]+numbber[3]+numbber[4])    
+            else:
+                print("Error, todavia no aceptamos numeros tan grandes")
             
-        elif porc is True:
+            ppp=newnumbber
+            arroba=bool(re.findall('@', line))
+            coma=bool(re.findall(',', line))
+            porc=bool(re.findall('%', line))
+            smps=line.find('$')
+            neggg=line.find('-')
+            parc=line.find('[')
+            
+            
+            
+            if arroba is False:
+                pass
+                if porc is False:
+                    pass
+                    if smps == -1:
+                        newnumbber=hex(newnumbber)[2:]
+                        
+            
+            if arroba is True:
                 newnumbberoc=str(newnumbber)
-                for digito in newnumbberoc:
-                    if digito !='0' and digito !='1':
-                        print('No se puede ingresar esto, ya que es binario')
-                    else:
-                        d=int(newnumbberoc,2)
-                        h=hex(d)[2:]
-                        newnumbber=h
-        
-        if smps != -1:
-            ppp=str(newnumbber)
-            newnumbber=ppp
-        
-        if coma is True:
-            direct=direc6
-            if neggg != -1:
-                nummm=nummm*-1
-            if nummm >= -16  and nummm <= 15:
-                if 'X' in line:
-                    rr='00'
-                if 'Y' in line:
-                    rr='01'
-                if 'SP' in line:
-                    rr='10'
-                if 'PC' in line:
-                    rr='11'
-                if nummm <0:
-                    signn='1'
-                    nummm=hex(nummm)
-                    nummm=hex(int(nummm,16) + 16**2)[3:]
-                    nummm=bin(int(nummm,16))[2:].zfill(4)
-                    
-                else:
-                    signn='0'
-                    nummm=hex(nummm)[2:]
-                    nummm=bin(int(nummm,16))[2:].zfill(4)
-                numerocheto=str(rr)+str(signn)+str(nummm)
-                numerocheto1=(str(rr)+str('0')+str(signn)+str(nummm))[4:]
-                numerocheto2=(str(rr)+str('0')+str(signn)+str(nummm))[:4]
-                d=int(numerocheto1,2)
+                d=int(newnumbberoc,8)
                 h=hex(d)[2:]
-                nummm1=h
-                d2=int(numerocheto2,2)
-                h2=hex(d2)[2:]
-                nummm2=h2
-                numerchetau=str(nummm2)+str(nummm1)
-                direct=direc6
-                coop='E3'
-                li=2
-                print(contador_operacion.zfill(4),end='   ')
-                out.write(str(contador_operacion.zfill(4))+"   ")
-                print("ADDD",end='   ')
-                out.write("ADDD   ")
-                print(direct,end='   ')
-                out.write(direct+"   ")
-                print(f"(LI={li})",end='   ')
-                out.write(f"(LI={li})   ")
-                print(f"{coop} {numerchetau}")
-                out.write(f"{coop} {numerchetau}\n")
-                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-                contador_operacion=suml2
+                newnumbber=h
                 
-            elif (nummm >= -256  and nummm <= -17) or (nummm >=16 and nummm <=255):
-                if 'X' in line:
-                    rr='00'
-                if 'Y' in line:
-                    rr='01'
-                if 'SP' in line:
-                    rr='10'
-                if 'PC' in line:
-                    rr='11'
-                if nummm <0:
-                    signn='1'
-                    nummm=hex(nummm)
-                    nummm=hex(int(nummm,16) + 16**2)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
-                    d=int(numerocheto1,2)
-                    h=hex(d)[2:]
-                    nummm1=h
-                    d2=int(numerocheto2,2)
-                    h2=hex(d2)[2:]
-                    nummm2=h2
-                    numerchetau=str(nummm2)+str(nummm1)
-                    direct=direc6
-                    coop='E3'
-                    li=3
-                    print(contador_operacion.zfill(4),end='   ')
-                    out.write(str(contador_operacion.zfill(4))+"   ")
-                    print("ADDD",end='   ')
-                    out.write("ADDD   ")
-                    print(direct,end='   ')
-                    out.write(direct+"   ")
-                    print(f"(LI={li})",end='   ')
-                    out.write(f"(LI={li})   ")
-                    print(f"{coop} {numerchetau} {nummm}")
-                    out.write(f"{coop} {numerchetau} {nummm}\n")
-                    suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
-                    contador_operacion=suml2
+            elif porc is True:
+                    newnumbberoc=str(newnumbber)
+                    for digito in newnumbberoc:
+                        if digito !='0' and digito !='1':
+                            print('No se puede ingresar esto, ya que es binario')
+                        else:
+                            d=int(newnumbberoc,2)
+                            h=hex(d)[2:]
+                            newnumbber=h
+            
+            if smps != -1:
+                ppp=str(newnumbber)
+                newnumbber=ppp
+            
+            if coma is True:
+                direct=direc6
+                if parc != -1:
+                    if neggg != -1:
+                        print(str(contador_operacion.zfill(4))+"   FDR")
+                        out.write(str(contador_operacion.zfill(4))+"   FDR\n")
+                        suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                        contador_operacion=suml2
+                    
+                    else:
+                        if 'X' in line:
+                            rr='00'
+                        if 'Y' in line:
+                            rr='01'
+                        if 'SP' in line:
+                            rr='10'
+                        if 'PC' in line:
+                            rr='11'
+                        nummm=hex(nummm)[2:]
+                        numerocheto1=(str('111')+str(rr)+str('011'))[4:]
+                        numerocheto2=(str('111')+str(rr)+str('011'))[:4]
+                        d=int(numerocheto1,2)
+                        h=hex(d)[2:]
+                        nummm1=h
+                        d2=int(numerocheto2,2)
+                        h2=hex(d2)[2:]
+                        nummm2=h2
+                        numerchetau=str(nummm2)+str(nummm1)
+                        direct=direc6
+                        coop='E3'
+                        li=4
+                        print(contador_operacion.zfill(4),end='   ')
+                        out.write(str(contador_operacion.zfill(4))+"   ")
+                        print("ADDD",end='   ')
+                        out.write("ADDD   ")
+                        print(direct,end='   ')
+                        out.write(direct+"   ")
+                        print(f"(LI={li})",end='   ')
+                        out.write(f"(LI={li})   ")
+                        print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
+                        out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
+                        suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                        contador_operacion=suml2
+                            
+                
                 else:
-                    signn='0'
-                    nummm=hex(nummm)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
-                    d=int(numerocheto1,2)
-                    h=hex(d)[2:]
-                    nummm1=h
-                    d2=int(numerocheto2,2)
-                    h2=hex(d2)[2:]
-                    nummm2=h2
-                    numerchetau=str(nummm2)+str(nummm1)
-                    direct=direc6
-                    coop='E3'
+                    
+                        if neggg != -1:
+                            nummm=nummm*-1
+                        if nummm >= -16  and nummm <= 15:
+                            if 'X' in line:
+                                rr='00'
+                            if 'Y' in line:
+                                rr='01'
+                            if 'SP' in line:
+                                rr='10'
+                            if 'PC' in line:
+                                rr='11'
+                            if nummm <0:
+                                signn='1'
+                                nummm=hex(nummm)
+                                nummm=hex(int(nummm,16) + 16**2)[3:]
+                                nummm=bin(int(nummm,16))[2:].zfill(4)
+                                
+                            else:
+                                signn='0'
+                                nummm=hex(nummm)[2:]
+                                nummm=bin(int(nummm,16))[2:].zfill(4)
+                            numerocheto=str(rr)+str(signn)+str(nummm)
+                            numerocheto1=(str(rr)+str('0')+str(signn)+str(nummm))[4:]
+                            numerocheto2=(str(rr)+str('0')+str(signn)+str(nummm))[:4]
+                            d=int(numerocheto1,2)
+                            h=hex(d)[2:]
+                            nummm1=h
+                            d2=int(numerocheto2,2)
+                            h2=hex(d2)[2:]
+                            nummm2=h2
+                            numerchetau=str(nummm2)+str(nummm1)
+                            direct=direc6
+                            coop='E3'
+                            li=2
+                            print(contador_operacion.zfill(4),end='   ')
+                            out.write(str(contador_operacion.zfill(4))+"   ")
+                            print("ADDD",end='   ')
+                            out.write("ADDD   ")
+                            print(direct,end='   ')
+                            out.write(direct+"   ")
+                            print(f"(LI={li})",end='   ')
+                            out.write(f"(LI={li})   ")
+                            print(f"{coop} {numerchetau}")
+                            out.write(f"{coop} {numerchetau}\n")
+                            suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                            contador_operacion=suml2
+                            
+                        elif (nummm >= -256  and nummm <= -17) or (nummm >=16 and nummm <=255):
+                            if 'X' in line:
+                                rr='00'
+                            if 'Y' in line:
+                                rr='01'
+                            if 'SP' in line:
+                                rr='10'
+                            if 'PC' in line:
+                                rr='11'
+                            if nummm <0:
+                                signn='1'
+                                nummm=hex(nummm)
+                                nummm=hex(int(nummm,16) + 16**2)[2:]
+                                numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
+                                numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
+                                d=int(numerocheto1,2)
+                                h=hex(d)[2:]
+                                nummm1=h
+                                d2=int(numerocheto2,2)
+                                h2=hex(d2)[2:]
+                                nummm2=h2
+                                numerchetau=str(nummm2)+str(nummm1)
+                                direct=direc6
+                                coop='E3'
+                                li=3
+                                print(contador_operacion.zfill(4),end='   ')
+                                out.write(str(contador_operacion.zfill(4))+"   ")
+                                print("ADDD",end='   ')
+                                out.write("ADDD   ")
+                                print(direct,end='   ')
+                                out.write(direct+"   ")
+                                print(f"(LI={li})",end='   ')
+                                out.write(f"(LI={li})   ")
+                                print(f"{coop} {numerchetau} {nummm}")
+                                out.write(f"{coop} {numerchetau} {nummm}\n")
+                                suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                                contador_operacion=suml2
+                            else:
+                                signn='0'
+                                nummm=hex(nummm)[2:]
+                                numerocheto1=(str('111')+str(rr)+str('0')+str('0')+str(signn))[4:]
+                                numerocheto2=(str('111')+str(rr)+str('0')+str('0')+str(signn))[:4]
+                                d=int(numerocheto1,2)
+                                h=hex(d)[2:]
+                                nummm1=h
+                                d2=int(numerocheto2,2)
+                                h2=hex(d2)[2:]
+                                nummm2=h2
+                                numerchetau=str(nummm2)+str(nummm1)
+                                direct=direc6
+                                coop='E3'
+                                li=3
+                                print(contador_operacion.zfill(4),end='   ')
+                                out.write(str(contador_operacion.zfill(4))+"   ")
+                                print("ADDD",end='   ')
+                                out.write("ADDD   ")
+                                print(direct,end='   ')
+                                out.write(direct+"   ")
+                                print(f"(LI={li})",end='   ')
+                                out.write(f"(LI={li})   ")
+                                print(f"{coop} {numerchetau} {nummm}")
+                                out.write(f"{coop} {numerchetau} {nummm}\n")
+                                suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                                contador_operacion=suml2
+                        elif (nummm >= -32768  and nummm <= -257) or (nummm >=256 and nummm <=65535):
+                            if 'X' in line:
+                                rr='00'
+                            if 'Y' in line:
+                                rr='01'
+                            if 'SP' in line:
+                                rr='10'
+                            if 'PC' in line:
+                                rr='11'
+                            if nummm <0:
+                                signn='1'
+                                nummm=hex(nummm)
+                                nummm=hex(int(nummm,16) + 16**4)[2:]
+                                numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
+                                numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
+                                d=int(numerocheto1,2)
+                                h=hex(d)[2:]
+                                nummm1=h
+                                d2=int(numerocheto2,2)
+                                h2=hex(d2)[2:]
+                                nummm2=h2
+                                numerchetau=str(nummm2)+str(nummm1)
+                                direct=direc6
+                                coop='E3'
+                                li=4
+                                print(contador_operacion.zfill(4),end='   ')
+                                out.write(str(contador_operacion.zfill(4))+"   ")
+                                print("ADDD",end='   ')
+                                out.write("ADDD   ")
+                                print(direct,end='   ')
+                                out.write(direct+"   ")
+                                print(f"(LI={li})",end='   ')
+                                out.write(f"(LI={li})   ")
+                                print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
+                                out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
+                                suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                                contador_operacion=suml2
+                            else:
+                                signn='0'
+                                nummm=hex(nummm)[2:]
+                                numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
+                                numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
+                                d=int(numerocheto1,2)
+                                h=hex(d)[2:]
+                                nummm1=h
+                                d2=int(numerocheto2,2)
+                                h2=hex(d2)[2:]
+                                nummm2=h2
+                                numerchetau=str(nummm2)+str(nummm1)
+                                direct=direc6
+                                coop='E3'
+                                li=4
+                                print(contador_operacion.zfill(4),end='   ')
+                                out.write(str(contador_operacion.zfill(4))+"   ")
+                                print("ADDD",end='   ')
+                                out.write("ADDD   ")
+                                print(direct,end='   ')
+                                out.write(direct+"   ")
+                                print(f"(LI={li})",end='   ')
+                                out.write(f"(LI={li})   ")
+                                print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
+                                out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
+                                suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
+                                contador_operacion=suml2
+            else:
+                if len(newnumbber)<=2:
+                    gatito=bool(re.findall('#', line))
+                    if gatito is True:          
+                        direct=direc2
+                        coop='C3'
+                        li=3
+                        print(contador_operacion.zfill(4),end='   ')
+                        out.write(str(contador_operacion.zfill(4))+"   ")
+                        print("ADDD",end='   ')
+                        out.write("ADDD   ")
+                        print(direct,end='   ')
+                        out.write(direct+"   ")
+                        print(f"(LI={li})",end='   ')
+                        out.write(f"(LI={li})   ")
+                        print(f"{coop} {newnumbber.zfill(4)}")
+                        out.write(f"{coop} {newnumbber.zfill(4)}\n")
+                        suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
+                        contador_operacion=suml3
+                    else:
+                        li=2
+                        direct=direc3
+                        coop='D3'
+                        print(contador_operacion.zfill(4),end='   ')
+                        out.write(str(contador_operacion.zfill(4))+"   ")
+                        print("ADDD",end='   ')
+                        out.write("ADDD   ")
+                        print(direct,end='   ')
+                        out.write(direct+"   ")
+                        print(f"(LI={li})",end='   ')
+                        out.write(f"(LI={li})   ")
+                        print(f"{coop} {newnumbber.zfill(2)}")
+                        out.write(f"{coop} {newnumbber.zfill(2)}\n")
+                        suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
+                        contador_operacion=suml2   
+                #falta la validacion para li3
+                elif len(newnumbber)==3 or 4:
                     li=3
-                    print(contador_operacion.zfill(4),end='   ')
-                    out.write(str(contador_operacion.zfill(4))+"   ")
-                    print("ADDD",end='   ')
-                    out.write("ADDD   ")
-                    print(direct,end='   ')
-                    out.write(direct+"   ")
-                    print(f"(LI={li})",end='   ')
-                    out.write(f"(LI={li})   ")
-                    print(f"{coop} {numerchetau} {nummm}")
-                    out.write(f"{coop} {numerchetau} {nummm}\n")
-                    suml2=hex(int(contador_operacion,16)+int(li3,16))[2:]
-                    contador_operacion=suml2
-            elif (nummm >= -32768  and nummm <= -257) or (nummm >=256 and nummm <=65535):
-                if 'X' in line:
-                    rr='00'
-                if 'Y' in line:
-                    rr='01'
-                if 'SP' in line:
-                    rr='10'
-                if 'PC' in line:
-                    rr='11'
-                if nummm <0:
-                    signn='1'
-                    nummm=hex(nummm)
-                    nummm=hex(int(nummm,16) + 16**4)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
-                    d=int(numerocheto1,2)
-                    h=hex(d)[2:]
-                    nummm1=h
-                    d2=int(numerocheto2,2)
-                    h2=hex(d2)[2:]
-                    nummm2=h2
-                    numerchetau=str(nummm2)+str(nummm1)
-                    direct=direc6
-                    coop='E3'
-                    li=4
-                    print(contador_operacion.zfill(4),end='   ')
-                    out.write(str(contador_operacion.zfill(4))+"   ")
-                    print("ADDD",end='   ')
-                    out.write("ADDD   ")
-                    print(direct,end='   ')
-                    out.write(direct+"   ")
-                    print(f"(LI={li})",end='   ')
-                    out.write(f"(LI={li})   ")
-                    print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
-                    out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
-                    suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
-                    contador_operacion=suml2
-                else:
-                    signn='0'
-                    nummm=hex(nummm)[2:]
-                    numerocheto1=(str('111')+str(rr)+str('0')+str('1')+str(signn))[4:]
-                    numerocheto2=(str('111')+str(rr)+str('0')+str('1')+str(signn))[:4]
-                    d=int(numerocheto1,2)
-                    h=hex(d)[2:]
-                    nummm1=h
-                    d2=int(numerocheto2,2)
-                    h2=hex(d2)[2:]
-                    nummm2=h2
-                    numerchetau=str(nummm2)+str(nummm1)
-                    direct=direc6
-                    coop='E3'
-                    li=4
-                    print(contador_operacion.zfill(4),end='   ')
-                    out.write(str(contador_operacion.zfill(4))+"   ")
-                    print("ADDD",end='   ')
-                    out.write("ADDD   ")
-                    print(direct,end='   ')
-                    out.write(direct+"   ")
-                    print(f"(LI={li})",end='   ')
-                    out.write(f"(LI={li})   ")
-                    print(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}")
-                    out.write(f"{coop} {numerchetau} {nummm.zfill(4)[:2]} {nummm.zfill(4)[2:]}\n")
-                    suml2=hex(int(contador_operacion,16)+int(li4,16))[2:]
-                    contador_operacion=suml2
-        else:
-            if len(newnumbber)<=2:
-                gatito=bool(re.findall('#', line))
-                if gatito is True:          
-                    direct=direc2
-                    coop='C3'
-                    li=3
+                    gatito=bool(re.findall('#', line))
+                    
+                    if gatito is True:          
+                        direct=direc2
+
+                        coop='C3'
+                    else:
+                        direct=direc4
+                        coop='F3'
                     print(contador_operacion.zfill(4),end='   ')
                     out.write(str(contador_operacion.zfill(4))+"   ")
                     print("ADDD",end='   ')
@@ -1071,52 +1311,12 @@ for line in lines:
                     print(f"{coop} {newnumbber.zfill(4)}")
                     out.write(f"{coop} {newnumbber.zfill(4)}\n")
                     suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-                    contador_operacion=suml3
+                    contador_operacion=suml3    
                 else:
-                    li=2
-                    direct=direc3
-                    coop='D3'
-                    print(contador_operacion.zfill(4),end='   ')
-                    out.write(str(contador_operacion.zfill(4))+"   ")
-                    print("ADDD",end='   ')
-                    out.write("ADDD   ")
-                    print(direct,end='   ')
-                    out.write(direct+"   ")
-                    print(f"(LI={li})",end='   ')
-                    out.write(f"(LI={li})   ")
-                    print(f"{coop} {newnumbber.zfill(2)}")
-                    out.write(f"{coop} {newnumbber.zfill(2)}\n")
+                    print(str(contador_operacion.zfill(4))+"   FDR")
+                    out.write(str(contador_operacion.zfill(4))+"   FDR")
                     suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-                    contador_operacion=suml2   
-            #falta la validacion para li3
-            elif len(newnumbber)==3 or 4:
-                li=3
-                gatito=bool(re.findall('#', line))
-                
-                if gatito is True:          
-                    direct=direc2
-
-                    coop='C3'
-                else:
-                    direct=direc4
-                    coop='F3'
-                print(contador_operacion.zfill(4),end='   ')
-                out.write(str(contador_operacion.zfill(4))+"   ")
-                print("ADDD",end='   ')
-                out.write("ADDD   ")
-                print(direct,end='   ')
-                out.write(direct+"   ")
-                print(f"(LI={li})",end='   ')
-                out.write(f"(LI={li})   ")
-                print(f"{coop} {newnumbber.zfill(4)}")
-                out.write(f"{coop} {newnumbber.zfill(4)}\n")
-                suml3=hex(int(contador_operacion,16)+int(li3,16))[2:]
-                contador_operacion=suml3    
-            else:
-                print(str(contador_operacion.zfill(4))+"   FDR")
-                out.write(str(contador_operacion.zfill(4))+"   FDR")
-                suml2=hex(int(contador_operacion,16)+int(li2,16))[2:]
-                contador_operacion=suml2
+                    contador_operacion=suml2
             
     if 'ANDA' in line: 
         numbber=re.findall('[0-99999]', line)
